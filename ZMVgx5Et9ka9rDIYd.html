@@ -1,0 +1,751 @@
+<html><head><base href="https://cdn.jsdelivr.net/gh/"><title>Landing Page Creator</title>
+<script src="jquery/jquery/3.6.0/jquery.min.js"></script>
+<script src="twbs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="twbs/bootstrap/5.3.0/css/bootstrap.min.css">
+<script src="octokit/rest/18.5.3/dist/index.umd.min.js"></script>
+<link rel="stylesheet" href="FortAwesome/Font-Awesome/5.15.4/css/all.min.css">
+<style>
+    #editor, #preview {
+        height: 90vh;
+        overflow-y: auto;
+    }
+    #preview {
+        border-left: 1px solid #ccc;
+    }
+    .feature-row, .testimonial-row, .pricing-row {
+        margin-top: 20px;
+    }
+    .feature-item, .testimonial-item, .pricing-item {
+        margin-bottom: 15px;
+    }
+    .color-palette {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    .color-swatch {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .color-swatch:hover {
+        transform: scale(1.1);
+    }
+    .color-swatch.active {
+        border: 3px solid #000;
+    }
+</style>
+</head>
+<body>
+<div class="container-fluid">
+    <h1 class="text-center my-4">Landing Page Creator</h1>
+    <div class="row">
+        <div class="col-md-6" id="editor">
+            <h3>Editor</h3>
+            <form id="landingPageForm">
+                <!-- Existing form fields -->
+                <div class="mb-3">
+                    <label for="title" class="form-label">Page Title</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="heading" class="form-label">Main Heading</label>
+                    <input type="text" class="form-control" id="heading" name="heading">
+                </div>
+                <div class="mb-3">
+                    <label for="subheading" class="form-label">Subheading</label>
+                    <input type="text" class="form-control" id="subheading" name="subheading">
+                </div>
+                <div class="mb-3">
+                    <label for="cta" class="form-label">Call to Action Text</label>
+                    <input type="text" class="form-control" id="cta" name="cta">
+                </div>
+                <div class="mb-3">
+                    <label for="ctaUrl" class="form-label">Call to Action URL</label>
+                    <input type="url" class="form-control" id="ctaUrl" name="ctaUrl" placeholder="https://example.com">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Color Palette</label>
+                    <div class="color-palette" id="colorPalette"></div>
+                    <button type="button" class="btn btn-secondary" id="addColor">Add Color</button>
+                </div>
+                <div class="mb-3">
+                    <label for="backgroundColor" class="form-label">Background Color</label>
+                    <input type="color" class="form-control" id="backgroundColor" name="backgroundColor">
+                </div>
+                <div class="mb-3">
+                    <label for="textColor" class="form-label">Text Color</label>
+                    <input type="color" class="form-control" id="textColor" name="textColor">
+                </div>
+                <div class="mb-3">
+                    <label for="backgroundImage" class="form-label">Background Image URL</label>
+                    <input type="url" class="form-control" id="backgroundImage" name="backgroundImage" placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <!-- Features Section -->
+                <h4>Product Features</h4>
+                <div id="features">
+                    <div class="feature-item">
+                        <div class="mb-3">
+                            <label class="form-label">Icon (Font Awesome class)</label>
+                            <input type="text" class="form-control feature-icon" name="featureIcon[]" placeholder="e.g. fas fa-star">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control feature-description" name="featureDescription[]">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addFeature" class="btn btn-secondary mb-3">Add Feature</button>
+                
+                <!-- YouTube Video Section -->
+                <h4>YouTube Video Section</h4>
+                <div class="mb-3">
+                    <label for="videoTitle" class="form-label">Video Section Title</label>
+                    <input type="text" class="form-control" id="videoTitle" name="videoTitle">
+                </div>
+                <div class="mb-3">
+                    <label for="youtubeUrl" class="form-label">YouTube Video URL</label>
+                    <input type="url" class="form-control" id="youtubeUrl" name="youtubeUrl" placeholder="https://www.youtube.com/watch?v=VIDEO_ID">
+                </div>
+
+                <!-- Testimonials Section -->
+                <h4>Testimonials Section</h4>
+                <div class="mb-3">
+                    <label for="testimonialTitle" class="form-label">Testimonials Section Title</label>
+                    <input type="text" class="form-control" id="testimonialTitle" name="testimonialTitle">
+                </div>
+                <div id="testimonials">
+                    <div class="testimonial-item">
+                        <div class="mb-3">
+                            <label class="form-label">Testimonial 1</label>
+                            <textarea class="form-control testimonial-text" name="testimonialText[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="mb-3">
+                            <label class="form-label">Testimonial 2</label>
+                            <textarea class="form-control testimonial-text" name="testimonialText[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="mb-3">
+                            <label class="form-label">Testimonial 3</label>
+                            <textarea class="form-control testimonial-text" name="testimonialText[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Section -->
+                <h4>Pricing Section</h4>
+                <div class="mb-3">
+                    <label for="pricingTitle" class="form-label">Pricing Section Title</label>
+                    <input type="text" class="form-control" id="pricingTitle" name="pricingTitle">
+                </div>
+                <div id="pricingOptions">
+                    <div class="pricing-item">
+                        <div class="mb-3">
+                            <label class="form-label">Option Name</label>
+                            <input type="text" class="form-control pricing-name" name="pricingName[]">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="text" class="form-control pricing-price" name="pricingPrice[]">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control pricing-description" name="pricingDescription[]" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Button Text</label>
+                            <input type="text" class="form-control pricing-button" name="pricingButton[]">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Button URL</label>
+                            <input type="url" class="form-control pricing-url" name="pricingUrl[]" placeholder="https://example.com">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addPricingOption" class="btn btn-secondary mb-3">Add Pricing Option</button>
+
+                <!-- Footer Section -->
+                <h4>Footer</h4>
+                <div class="mb-3">
+                    <label for="brandName" class="form-label">Brand Name</label>
+                    <input type="text" class="form-control" id="brandName" name="brandName" placeholder="Your Brand Name">
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6" id="preview">
+            <h3>Preview</h3>
+            <iframe id="previewFrame" style="width: 100%; height: 80vh; border: none;"></iframe>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <button id="deployBtn" class="btn btn-primary me-2">Deploy to GitHub Pages</button>
+            <button id="downloadBtn" class="btn btn-success">Download HTML</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const template = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/5.15.4/css/all.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: {{backgroundColor}};
+                color: {{textColor}};
+                background-image: url('{{backgroundImage}}');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .overlay {
+                background-color: rgba({{backgroundColor}}0.8);
+                flex-grow: 1;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                text-align: center;
+            }
+            h1, h2 {
+                font-size: 3rem;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            }
+            p {
+                font-size: 1.5rem;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            }
+            .cta {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: {{textColor}};
+                color: {{backgroundColor}};
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 1.2rem;
+                margin-top: 20px;
+                transition: all 0.3s ease;
+            }
+            .cta:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            }
+            .features, .testimonials, .pricing {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 40px;
+            }
+            .feature, .testimonial, .price-option {
+                flex: 0 0 calc(33.333% - 20px);
+                margin: 10px;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+                backdrop-filter: blur(5px);
+                transition: all 0.3s ease;
+            }
+            .feature:hover, .testimonial:hover, .price-option:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+            .feature i {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            .video-section {
+                margin-top: 40px;
+            }
+            .video-container {
+                position: relative;
+                width: 100%;
+                padding-bottom: 56.25%;
+                height: 0;
+            }
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .testimonial {
+                font-style: italic;
+            }
+            .testimonial::before {
+                content: '"';
+                font-size: 3rem;
+                color: rgba(255,255,255,0.3);
+                position: absolute;
+                top: -10px;
+                left: 10px;
+            }
+            .testimonial::after {
+                content: '"';
+                font-size: 3rem;
+                color: rgba(255,255,255,0.3);
+                position: absolute;
+                bottom: -30px;
+                right: 10px;
+            }
+            .price-option h3 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            .price {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+            .price-description {
+                margin-bottom: 20px;
+            }
+            footer {
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
+                text-align: center;
+                padding: 10px 0;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="overlay">
+            <div class="container">
+                <h1>{{heading}}</h1>
+                <p>{{subheading}}</p>
+                <a href="{{ctaUrl}}" class="cta">{{cta}}</a>
+                <div class="features">
+                    {{features}}
+                </div>
+                <div class="video-section">
+                    <h2>{{videoTitle}}</h2>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="{{youtubeEmbedUrl}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="testimonial-section">
+                    <h2>{{testimonialTitle}}</h2>
+                    <div class="testimonials">
+                        {{testimonials}}
+                    </div>
+                </div>
+                <div class="pricing-section">
+                    <h2>{{pricingTitle}}</h2>
+                    <div class="pricing">
+                        {{pricingOptions}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            © 2024 {{brandName}}. All rights reserved.
+        </footer>
+    </body>
+    </html>
+    `;
+
+    const colorPalette = document.getElementById('colorPalette');
+    const addColorBtn = document.getElementById('addColor');
+    let colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+
+    function createColorSwatch(color) {
+        const swatch = document.createElement('div');
+        swatch.className = 'color-swatch';
+        swatch.style.backgroundColor = color;
+        swatch.addEventListener('click', function() {
+            document.getElementById('backgroundColor').value = color;
+            updatePreview();
+            updateActiveColor(swatch);
+        });
+        return swatch;
+    }
+
+    function updateActiveColor(activeSwatch) {
+        document.querySelectorAll('.color-swatch').forEach(swatch => {
+            swatch.classList.remove('active');
+        });
+        activeSwatch.classList.add('active');
+    }
+
+    function renderColorPalette() {
+        colorPalette.innerHTML = '';
+        colors.forEach(color => {
+            colorPalette.appendChild(createColorSwatch(color));
+        });
+    }
+
+    addColorBtn.addEventListener('click', function() {
+        const newColor = document.getElementById('backgroundColor').value;
+        colors.push(newColor);
+        renderColorPalette();
+    });
+
+    renderColorPalette();
+
+    function getYouTubeEmbedUrl(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        if (match && match[2].length === 11) {
+            return `https://www.youtube.com/embed/${match[2]}`;
+        }
+        return '';
+    }
+
+    function updatePreview() {
+        let updatedTemplate = template;
+        const formData = new FormData(document.getElementById('landingPageForm'));
+        for (let [key, value] of formData.entries()) {
+            if (key !== 'featureIcon[]' && key !== 'featureDescription[]' && key !== 'testimonialText[]' &&
+                key !== 'pricingName[]' && key !== 'pricingPrice[]' && key !== 'pricingDescription[]' &&
+                key !== 'pricingButton[]' && key !== 'pricingUrl[]') {
+                if (key === 'youtubeUrl') {
+                    const embedUrl = getYouTubeEmbedUrl(value);
+                    updatedTemplate = updatedTemplate.replace('{{youtubeEmbedUrl}}', embedUrl);
+                } else {
+                    updatedTemplate = updatedTemplate.replace(new RegExp(`{{${key}}}`, 'g'), value);
+                }
+            }
+        }
+
+        // Handle features
+        let featuresHtml = '';
+        const icons = formData.getAll('featureIcon[]');
+        const descriptions = formData.getAll('featureDescription[]');
+        for (let i = 0; i < icons.length; i++) {
+            featuresHtml += `
+                <div class="feature">
+                    <i class="${icons[i]}"></i>
+                    <p>${descriptions[i]}</p>
+                </div>
+            `;
+        }
+        updatedTemplate = updatedTemplate.replace('{{features}}', featuresHtml);
+
+        // Handle testimonials
+        let testimonialsHtml = '';
+        const testimonials = formData.getAll('testimonialText[]');
+        for (let i = 0; i < testimonials.length; i++) {
+            testimonialsHtml += `
+                <div class="testimonial">
+                    <p>${testimonials[i]}</p>
+                </div>
+            `;
+        }
+        updatedTemplate = updatedTemplate.replace('{{testimonials}}', testimonialsHtml);
+
+        // Handle pricing options
+        let pricingOptionsHtml = '';
+        const pricingNames = formData.getAll('pricingName[]');
+        const pricingPrices = formData.getAll('pricingPrice[]');
+        const pricingDescriptions = formData.getAll('pricingDescription[]');
+        const pricingButtons = formData.getAll('pricingButton[]');
+        const pricingUrls = formData.getAll('pricingUrl[]');
+        for (let i = 0; i < pricingNames.length; i++) {
+            pricingOptionsHtml += `
+                <div class="price-option">
+                    <h3>${pricingNames[i]}</h3>
+                    <div class="price">${pricingPrices[i]}</div>
+                    <p class="price-description">${pricingDescriptions[i]}</p>
+                    <a href="${pricingUrls[i]}" class="cta">${pricingButtons[i]}</a>
+                </div>
+            `;
+        }
+        updatedTemplate = updatedTemplate.replace('{{pricingOptions}}', pricingOptionsHtml);
+
+        // Convert color to RGB for overlay
+        const hexToRgb = hex => {
+            const bigint = parseInt(hex.slice(1), 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return `${r},${g},${b},`;
+        };
+        const bgColor = formData.get('backgroundColor');
+        updatedTemplate = updatedTemplate.replace(`rgba({{backgroundColor}}0.8)`, `rgba(${hexToRgb(bgColor)}0.8)`);
+
+        const previewFrame = document.getElementById('previewFrame');
+        previewFrame.srcdoc = updatedTemplate;
+    }
+
+    document.querySelectorAll('#landingPageForm input, #landingPageForm textarea').forEach(input => {
+        input.addEventListener('input', updatePreview);
+    });
+
+    document.getElementById('addFeature').addEventListener('click', function() {
+        const featureItem = document.createElement('div');
+        featureItem.className = 'feature-item';
+        featureItem.innerHTML = `
+            <div class="mb-3">
+                <label class="form-label">Icon (Font Awesome class)</label>
+                <input type="text" class="form-control feature-icon" name="featureIcon[]" placeholder="e.g. fas fa-star">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <input type="text" class="form-control feature-description" name="featureDescription[]">
+            </div>
+        `;
+        document.getElementById('features').appendChild(featureItem);
+        featureItem.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', updatePreview);
+        });
+    });
+
+    document.getElementById('addPricingOption').addEventListener('click', function() {
+        const pricingItem = document.createElement('div');
+        pricingItem.className = 'pricing-item';
+        pricingItem.innerHTML = `
+            <div class="mb-3">
+                <label class="form-label">Option Name</label>
+                <input type="text" class="form-control pricing-name" name="pricingName[]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-control pricing-price" name="pricingPrice[]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control pricing-description" name="pricingDescription[]" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Button Text</label>
+                <input type="text" class="form-control pricing-button" name="pricingButton[]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Button URL</label>
+                <input type="url" class="form-control pricing-url" name="pricingUrl[]" placeholder="https://example.com">
+            </div>
+        `;
+        document.getElementById('pricingOptions').appendChild(pricingItem);
+        pricingItem.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('input', updatePreview);
+        });
+    });
+
+    updatePreview();
+
+    document.getElementById('deployBtn').addEventListener('click', async function() {
+        const token = prompt("Please enter your GitHub Personal Access Token:");
+        if (!token) return;
+
+        const Octokit = window.Octokit;
+        const octokit = new Octokit({ auth: token });
+
+        try {
+            const username = (await octokit.request('GET /user')).data.login;
+            const repoName = 'my-landing-page-' + Date.now();
+
+            // Create repository
+            await octokit.repos.createForAuthenticatedUser({
+                name: repoName,
+                auto_init: true
+            });
+
+            // Get the updated template
+            let updatedTemplate = template;
+            const formData = new FormData(document.getElementById('landingPageForm'));
+            for (let [key, value] of formData.entries()) {
+                if (key !== 'featureIcon[]' && key !== 'featureDescription[]' && key !== 'testimonialText[]' &&
+                    key !== 'pricingName[]' && key !== 'pricingPrice[]' && key !== 'pricingDescription[]' &&
+                    key !== 'pricingButton[]' && key !== 'pricingUrl[]') {
+                    if (key === 'youtubeUrl') {
+                        const embedUrl = getYouTubeEmbedUrl(value);
+                        updatedTemplate = updatedTemplate.replace('{{youtubeEmbedUrl}}', embedUrl);
+                    } else {
+                        updatedTemplate = updatedTemplate.replace(new RegExp(`{{${key}}}`, 'g'), value);
+                    }
+                }
+            }
+
+            // Handle features
+            let featuresHtml = '';
+            const icons = formData.getAll('featureIcon[]');
+            const descriptions = formData.getAll('featureDescription[]');
+            for (let i = 0; i < icons.length; i++) {
+                featuresHtml += `
+                    <div class="feature">
+                        <i class="${icons[i]}"></i>
+                        <p>${descriptions[i]}</p>
+                    </div>
+                `;
+            }
+            updatedTemplate = updatedTemplate.replace('{{features}}', featuresHtml);
+
+            // Handle testimonials
+            let testimonialsHtml = '';
+            const testimonials = formData.getAll('testimonialText[]');
+            for (let i = 0; i < testimonials.length; i++) {
+                testimonialsHtml += `
+                    <div class="testimonial">
+                        <p>${testimonials[i]}</p>
+                    </div>
+                `;
+            }
+            updatedTemplate = updatedTemplate.replace('{{testimonials}}', testimonialsHtml);
+
+            // Handle pricing options
+            let pricingOptionsHtml = '';
+            const pricingNames = formData.getAll('pricingName[]');
+            const pricingPrices = formData.getAll('pricingPrice[]');
+            const pricingDescriptions = formData.getAll('pricingDescription[]');
+            const pricingButtons = formData.getAll('pricingButton[]');
+            const pricingUrls = formData.getAll('pricingUrl[]');
+            for (let i = 0; i < pricingNames.length; i++) {
+                pricingOptionsHtml += `
+                    <div class="price-option">
+                        <h3>${pricingNames[i]}</h3>
+                        <div class="price">${pricingPrices[i]}</div>
+                        <p class="price-description">${pricingDescriptions[i]}</p>
+                        <a href="${pricingUrls[i]}" class="cta">${pricingButtons[i]}</a>
+                    </div>
+                `;
+            }
+            updatedTemplate = updatedTemplate.replace('{{pricingOptions}}', pricingOptionsHtml);
+
+            // Convert color to RGB for overlay
+            const hexToRgb = hex => {
+                const bigint = parseInt(hex.slice(1), 16);
+                const r = (bigint >> 16) & 255;
+                const g = (bigint >> 8) & 255;
+                const b = bigint & 255;
+                return `${r},${g},${b},`;
+            };
+            const bgColor = formData.get('backgroundColor');
+            updatedTemplate = updatedTemplate.replace(`rgba({{backgroundColor}}0.8)`, `rgba(${hexToRgb(bgColor)}0.8)`);
+
+            // Push index.html to the repository
+            await octokit.repos.createOrUpdateFileContents({
+                owner: username,
+                repo: repoName,
+                path: 'index.html',
+                message: 'Initial commit',
+                content: btoa(updatedTemplate)
+            });
+
+            // Enable GitHub Pages
+            await octokit.repos.updateInformationAboutPagesSite({
+                owner: username,
+                repo: repoName,
+                source: {
+                    branch: 'main',
+                    path: '/'
+                }
+            });
+
+            alert(`Your landing page has been deployed! Visit https://${username}.github.io/${repoName} to see it live.`);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while deploying your landing page. Please check the console for details.');
+        }
+    });
+
+    // Add download functionality
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        let updatedTemplate = template;
+        const formData = new FormData(document.getElementById('landingPageForm'));
+        for (let [key, value] of formData.entries()) {
+            if (key !== 'featureIcon[]' && key !== 'featureDescription[]' && key !== 'testimonialText[]' &&
+                key !== 'pricingName[]' && key !== 'pricingPrice[]' && key !== 'pricingDescription[]' &&
+                key !== 'pricingButton[]' && key !== 'pricingUrl[]') {
+                if (key === 'youtubeUrl') {
+                    const embedUrl = getYouTubeEmbedUrl(value);
+                    updatedTemplate = updatedTemplate.replace('{{youtubeEmbedUrl}}', embedUrl);
+                } else {
+                    updatedTemplate = updatedTemplate.replace(new RegExp(`{{${key}}}`, 'g'), value);
+                }
+            }
+        }
+
+        // Handle features
+        let featuresHtml = '';
+        const icons = formData.getAll('featureIcon[]');
+        const descriptions = formData.getAll('featureDescription[]');
+        for (let i = 0; i < icons.length; i++) {
+            featuresHtml += `
+                <div class="feature">
+                    <i class="${icons[i]}"></i>
+                    <p>${descriptions[i]}</p>
+                </div>
+            `;
+        }
+        updatedTemplate = updatedTemplate.replace('{{features}}', featuresHtml);
+
+        // Handle testimonials
+        let testimonialsHtml = '';
+        const testimonials = formData.getAll('testimonialText[]');
+        for (let i = 0; i < testimonials.length; i++) {
+            testimonialsHtml += `
+                <div class="testimonial">
+                    <p>${testimonials[i]}</p>
+                </div>
+            `;
+        }
+        updatedTemplate = updatedTemplate.replace('{{testimonials}}', testimonialsHtml);
+
+        // Handle pricing options
+        let pricingOptionsHtml = '';
+        const pricingNames = formData.getAll('pricingName[]');
+        const pricingPrices = formData.getAll('pricingPrice[]');
+        const pricingDescriptions = formData.getAll('pricingDescription[]');
+        const pricingButtons = formData.getAll('pricingButton[]');
+        const pricingUrls = formData.getAll('pricingUrl[]');
+        for (let i = 0; i < pricingNames.length; i++) {
+            pricingOptionsHtml += `
+                <div class="price-option">
+                    <h3>${pricingNames[i]}</h3>
+                    <div class="price">${pricingPrices[i]}</div>
+                    <p class="price-description">${pricingDescriptions[i]}</p>
+                    <a href="${pricingUrls[i]}" class="cta">${pricingButtons[i]}</a>
+                </div>
+            `;
+        }
+        updatedTemplate = updatedTemplate.replace('{{pricingOptions}}', pricingOptionsHtml);
+
+        // Convert color to RGB for overlay
+        const hexToRgb = hex => {
+            const bigint = parseInt(hex.slice(1), 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return `${r},${g},${b},`;
+        };
+        const bgColor = formData.get('backgroundColor');
+        updatedTemplate = updatedTemplate.replace(`rgba({{backgroundColor}}0.8)`, `rgba(${hexToRgb(bgColor)}0.8)`);
+
+        // Create a Blob with the HTML content
+        const blob = new Blob([updatedTemplate], { type: 'text/html' });
+
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'index.html';
+
+        // Trigger the download
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    });
+});
+</script>
+</body>
+</html>
