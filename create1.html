@@ -21,31 +21,6 @@
         #preview {
             border-left: 1px solid #ccc;
         }
-        .feature-row, .testimonial-row, .pricing-row {
-            margin-top: 20px;
-        }
-        .feature-item, .testimonial-item, .pricing-item {
-            margin-bottom: 15px;
-        }
-        .color-palette {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .color-swatch {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .color-swatch:hover {
-            transform: scale(1.1);
-        }
-        .color-swatch.active {
-            border: 3px solid #000;
-        }
         .navbar {
             margin-bottom: 20px;
         }
@@ -120,23 +95,6 @@
                 <div class="mb-3">
                     <label for="ctaUrl" class="form-label">Call to Action URL</label>
                     <input type="url" class="form-control" id="ctaUrl" name="ctaUrl" placeholder="https://example.com">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Color Palette</label>
-                    <div class="color-palette" id="colorPalette"></div>
-                    <button type="button" class="btn btn-secondary" id="addColor">Add Color</button>
-                </div>
-                <div class="mb-3">
-                    <label for="backgroundColor" class="form-label">Background Color</label>
-                    <input type="color" class="form-control" id="backgroundColor" name="backgroundColor">
-                </div>
-                <div class="mb-3">
-                    <label for="textColor" class="form-label">Text Color</label>
-                    <input type="color" class="form-control" id="textColor" name="textColor">
-                </div>
-                <div class="mb-3">
-                    <label for="backgroundImage" class="form-label">Background Image URL</label>
-                    <input type="url" class="form-control" id="backgroundImage" name="backgroundImage" placeholder="https://example.com/image.jpg">
                 </div>
 
                 <!-- Features Section -->
@@ -244,8 +202,6 @@
             <button id="deployBtn" class="btn btn-primary me-2">Deploy to GitHub Pages</button>
             <button id="downloadBtn" class="btn btn-success me-2">Download HTML</button>
             <a href="videos.html" class="btn btn-info me-2">Explanatory Videos</a>
-            <!-- Night mode toggle button -->
-            <button id="toggleNightMode" class="btn btn-dark">Night Mode</button>
         </div>
     </div>
 
@@ -264,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update the favicon when the user provides a new URL
     faviconUrlInput.addEventListener('input', function() {
         pageFavicon.href = faviconUrlInput.value;
-        updatePreview();
     });
 
     // Function to update the preview with the current form data
@@ -277,10 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Generate the HTML for the preview based on form input
     function generateHtml() {
-        // Customizing Favicon
         const faviconUrl = faviconUrlInput.value;
-
-        // Customizing Navigation Bar
         const navbarTitle = document.getElementById('navbarTitle').value;
         let navbarHtml = `<nav class="navbar navbar-expand-lg navbar-light bg-light">
                             <a class="navbar-brand" href="#">${navbarTitle}</a>
@@ -294,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         navbarHtml += `</ul></div></nav>`;
 
-        // Custom CTA on the right side
         const ctaTextRight = document.getElementById('ctaTextRight').value;
         const ctaUrlRight = document.getElementById('ctaUrlRight').value;
 
@@ -303,6 +254,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const pageSubheading = document.getElementById('subheading').value;
         const pageCtaText = document.getElementById('cta').value;
         const pageCtaUrl = document.getElementById('ctaUrl').value;
+
+        let featuresHtml = '';
+        document.querySelectorAll('.feature-item').forEach(feature => {
+            const icon = feature.querySelector('.feature-icon').value;
+            const description = feature.querySelector('.feature-description').value;
+            featuresHtml += `<div class="feature"><i class="${icon}"></i><p>${description}</p></div>`;
+        });
+
+        let pricingHtml = '';
+        document.querySelectorAll('.pricing-item').forEach(pricing => {
+            const name = pricing.querySelector('.pricing-name').value;
+            const price = pricing.querySelector('.pricing-price').value;
+            const description = pricing.querySelector('.pricing-description').value;
+            const buttonText = pricing.querySelector('.pricing-button').value;
+            const buttonUrl = pricing.querySelector('.pricing-url').value;
+            pricingHtml += `<div class="price-option">
+                                <h3>${name}</h3>
+                                <div class="price">${price}</div>
+                                <p>${description}</p>
+                                <a href="${buttonUrl}" class="btn btn-primary">${buttonText}</a>
+                            </div>`;
+        });
 
         return `
             <!DOCTYPE html>
@@ -322,6 +295,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         background-size: cover;
                         background-position: center;
                     }
+                    .feature {
+                        margin: 20px 0;
+                    }
+                    .price-option {
+                        margin: 20px 0;
+                    }
                     .cta-right {
                         position: fixed;
                         right: 20px;
@@ -336,6 +315,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h1>${pageHeading}</h1>
                     <p>${pageSubheading}</p>
                     <a href="${pageCtaUrl}" class="btn btn-primary">${pageCtaText}</a>
+                    <div class="features">${featuresHtml}</div>
+                    <div class="pricing">${pricingHtml}</div>
                 </div>
                 <div id="ctaRight" class="cta-right">
                     <a href="${ctaUrlRight}" class="btn btn-primary">${ctaTextRight}</a>
@@ -367,12 +348,50 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('navbarLinks').appendChild(navbarLinkItem);
     });
 
-    // Night mode toggle
-    document.getElementById('toggleNightMode').addEventListener('click', function() {
-        const body = document.body;
-        const isNightMode = body.classList.toggle('bg-dark');
-        body.classList.toggle('text-light');
-        this.textContent = isNightMode ? 'Day Mode' : 'Night Mode';
+    // Adding more features
+    document.getElementById('addFeature').addEventListener('click', function() {
+        const featureItem = document.createElement('div');
+        featureItem.className = 'feature-item';
+        featureItem.innerHTML = `
+            <div class="mb-3">
+                <label class="form-label">Icon (Font Awesome class)</label>
+                <input type="text" class="form-control feature-icon" name="featureIcon[]" placeholder="e.g. fas fa-star">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <input type="text" class="form-control feature-description" name="featureDescription[]">
+            </div>
+        `;
+        document.getElementById('features').appendChild(featureItem);
+    });
+
+    // Adding more pricing options
+    document.getElementById('addPricingOption').addEventListener('click', function() {
+        const pricingItem = document.createElement('div');
+        pricingItem.className = 'pricing-item';
+        pricingItem.innerHTML = `
+            <div class="mb-3">
+                <label class="form-label">Option Name</label>
+                <input type="text" class="form-control pricing-name" name="pricingName[]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-control pricing-price" name="pricingPrice[]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control pricing-description" name="pricingDescription[]" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Button Text</label>
+                <input type="text" class="form-control pricing-button" name="pricingButton[]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Button URL</label>
+                <input type="url" class="form-control pricing-url" name="pricingUrl[]" placeholder="https://example.com">
+            </div>
+        `;
+        document.getElementById('pricingOptions').appendChild(pricingItem);
     });
 
     // Initial preview update
