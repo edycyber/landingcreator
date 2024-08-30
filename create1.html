@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Creator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/twbs/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.4/css/all.min.css">
+    
+    <!-- Customization of page icon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" id="pageFavicon">
+
+    <style>
+        body {
+            transition: background-color 0.5s, color 0.5s;
+        }
+        #editor, #preview {
+            height: 90vh;
+            overflow-y: auto;
+        }
+        #preview {
+            border-left: 1px solid #ccc;
+        }
+        .feature-row, .testimonial-row, .pricing-row {
+            margin-top: 20px;
+        }
+        .feature-item, .testimonial-item, .pricing-item {
+            margin-bottom: 15px;
+        }
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+        .color-swatch.active {
+            border: 3px solid #000;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .cta-right {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <h1 class="text-center my-4">Landing Page Creator</h1>
+    <div class="row">
+        <!-- Editor on the left side -->
+        <div class="col-md-6" id="editor">
+            <h3>Editor</h3>
+            <form id="landingPageForm">
+                <!-- Custom Favicon -->
+                <div class="mb-3">
+                    <label for="faviconUrl" class="form-label">Favicon URL</label>
+                    <input type="url" class="form-control" id="faviconUrl" name="faviconUrl" placeholder="https://example.com/favicon.ico">
+                </div>
+
+                <!-- Custom Navigation Bar -->
+                <div class="mb-3">
+                    <label for="navbarTitle" class="form-label">Navigation Bar Title</label>
+                    <input type="text" class="form-control" id="navbarTitle" name="navbarTitle" placeholder="My Website">
+                </div>
+                <div id="navbarLinks">
+                    <div class="navbar-link-item">
+                        <div class="mb-3">
+                            <label class="form-label">Nav Link Text</label>
+                            <input type="text" class="form-control navbar-link-text" name="navbarLinkText[]" placeholder="Home">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nav Link URL</label>
+                            <input type="url" class="form-control navbar-link-url" name="navbarLinkUrl[]" placeholder="https://example.com/home">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addNavbarLink" class="btn btn-secondary mb-3">Add Navbar Link</button>
+
+                <!-- Custom CTA on the right side -->
+                <div class="mb-3">
+                    <label for="ctaTextRight" class="form-label">CTA Text (Right Side)</label>
+                    <input type="text" class="form-control" id="ctaTextRight" name="ctaTextRight" placeholder="Contact Us">
+                </div>
+                <div class="mb-3">
+                    <label for="ctaUrlRight" class="form-label">CTA URL (Right Side)</label>
+                    <input type="url" class="form-control" id="ctaUrlRight" name="ctaUrlRight" placeholder="https://example.com/contact">
+                </div>
+
+                <!-- Form Fields -->
+                <div class="mb-3">
+                    <label for="title" class="form-label">Page Title</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="heading" class="form-label">Main Heading</label>
+                    <input type="text" class="form-control" id="heading" name="heading">
+                </div>
+                <div class="mb-3">
+                    <label for="subheading" class="form-label">Subheading</label>
+                    <input type="text" class="form-control" id="subheading" name="subheading">
+                </div>
+                <div class="mb-3">
+                    <label for="cta" class="form-label">Call to Action Text</label>
+                    <input type="text" class="form-control" id="cta" name="cta">
+                </div>
+                <div class="mb-3">
+                    <label for="ctaUrl" class="form-label">Call to Action URL</label>
+                    <input type="url" class="form-control" id="ctaUrl" name="ctaUrl" placeholder="https://example.com">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Color Palette</label>
+                    <div class="color-palette" id="colorPalette"></div>
+                    <button type="button" class="btn btn-secondary" id="addColor">Add Color</button>
+                </div>
+                <div class="mb-3">
+                    <label for="backgroundColor" class="form-label">Background Color</label>
+                    <input type="color" class="form-control" id="backgroundColor" name="backgroundColor">
+                </div>
+                <div class="mb-3">
+                    <label for="textColor" class="form-label">Text Color</label>
+                    <input type="color" class="form-control" id="textColor" name="textColor">
+                </div>
+                <div class="mb-3">
+                    <label for="backgroundImage" class="form-label">Background Image URL</label>
+                    <input type="url" class="form-control" id="backgroundImage" name="backgroundImage" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <!-- Features Section -->
+                <h4>Product Features</h4>
+                <div id="features">
+                    <div class="feature-item">
+                        <div class="mb-3">
+                            <label class="form-label">Icon (Font Awesome class)</label>
+                            <input type="text" class="form-control feature-icon" name="featureIcon[]" placeholder="e.g. fas fa-star">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control feature-description" name="featureDescription[]">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addFeature" class="btn btn-secondary mb-3">Add Feature</button>
+
+                <!-- YouTube Video Section -->
+                <h4>YouTube Video Section</h4>
+                <div class="mb-3">
+                    <label for="videoTitle" class="form-label">Video Section Title</label>
+                    <input type="text" class="form-control" id="videoTitle" name="videoTitle">
+                </div>
+                <div class="mb-3">
+                    <label for="youtubeUrl" class="form-label">YouTube Video URL</label>
+                    <input type="url" class="form-control" id="youtubeUrl" name="youtubeUrl" placeholder="https://www.youtube.com/watch?v=VIDEO_ID">
+                </div>
+
+                <!-- Testimonials Section -->
+                <h4>Testimonials Section</h4>
+                <div class="mb-3">
+                    <label for="testimonialTitle" class="form-label">Testimonials Section Title</label>
+                    <input type="text" class="form-control" id="testimonialTitle" name="testimonialTitle">
+                </div>
+                <div id="testimonials">
+                    <div class="testimonial-item">
+                        <div class="mb-3">
+                            <label class="form-label">Testimonial 1</label>
+                            <textarea class="form-control testimonial-text" name="testimonialText[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="mb-3">
+                            <label class="form-label">Testimonial 2</label>
+                            <textarea class="form-control testimonial-text" name="testimonialText[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="mb-3">
+                            <label class="form-label">Testimonial 3</label>
+                            <textarea class="form-control testimonial-text" name="testimonialText[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Section -->
+                <h4>Pricing Section</h4>
+                <div class="mb-3">
+                    <label for="pricingTitle" class="form-label">Pricing Section Title</label>
+                    <input type="text" class="form-control" id="pricingTitle" name="pricingTitle">
+                </div>
+                <div id="pricingOptions">
+                    <div class="pricing-item">
+                        <div class="mb-3">
+                            <label class="form-label">Option Name</label>
+                            <input type="text" class="form-control pricing-name" name="pricingName[]">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="text" class="form-control pricing-price" name="pricingPrice[]">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control pricing-description" name="pricingDescription[]" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Button Text</label>
+                            <input type="text" class="form-control pricing-button" name="pricingButton[]">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Button URL</label>
+                            <input type="url" class="form-control pricing-url" name="pricingUrl[]" placeholder="https://example.com">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addPricingOption" class="btn btn-secondary mb-3">Add Pricing Option</button>
+
+                <!-- Footer Section -->
+                <h4>Footer</h4>
+                <div class="mb-3">
+                    <label for="brandName" class="form-label">Brand Name</label>
+                    <input type="text" class="form-control" id="brandName" name="brandName" placeholder="Your Brand Name">
+                </div>
+            </form>
+        </div>
+        <!-- Preview on the right side -->
+        <div class="col-md-6" id="preview">
+            <h3>Preview</h3>
+            <iframe id="previewFrame" style="width: 100%; height: 80vh; border: none;"></iframe>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <button id="deployBtn" class="btn btn-primary me-2">Deploy to GitHub Pages</button>
+            <button id="downloadBtn" class="btn btn-success me-2">Download HTML</button>
+            <a href="videos.html" class="btn btn-info me-2">Explanatory Videos</a>
+            <!-- Night mode toggle button -->
+            <button id="toggleNightMode" class="btn btn-dark">Night Mode</button>
+        </div>
+    </div>
+
+    <!-- CTA button on the right side -->
+    <div id="ctaRight" class="cta-right">
+        <a href="#" class="btn btn-primary" id="ctaRightLink">Contact Us</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const previewFrame = document.getElementById('previewFrame');
+    const faviconUrlInput = document.getElementById('faviconUrl');
+    const pageFavicon = document.getElementById('pageFavicon');
+
+    // Update the favicon when the user provides a new URL
+    faviconUrlInput.addEventListener('input', function() {
+        pageFavicon.href = faviconUrlInput.value;
+    });
+
+    // Function to update the preview with the current form data
+    function updatePreview() {
+        // Customizing Favicon
+        const faviconUrl = faviconUrlInput.value;
+        if (faviconUrl) {
+            previewFrame.contentWindow.document.querySelector('link[rel="icon"]').href = faviconUrl;
+        }
+
+        // Customizing Navigation Bar
+        const navbarTitle = document.getElementById('navbarTitle').value;
+        let navbarHtml = `<nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <a class="navbar-brand" href="#">${navbarTitle}</a>
+                            <div class="collapse navbar-collapse">
+                                <ul class="navbar-nav ms-auto">`;
+        const navLinks = document.querySelectorAll('.navbar-link-item');
+        navLinks.forEach(link => {
+            const linkText = link.querySelector('.navbar-link-text').value;
+            const linkUrl = link.querySelector('.navbar-link-url').value;
+            navbarHtml += `<li class="nav-item"><a class="nav-link" href="${linkUrl}">${linkText}</a></li>`;
+        });
+        navbarHtml += `</ul></div></nav>`;
+        previewFrame.contentWindow.document.body.insertAdjacentHTML('afterbegin', navbarHtml);
+
+        // Custom CTA on the right side
+        const ctaTextRight = document.getElementById('ctaTextRight').value;
+        const ctaUrlRight = document.getElementById('ctaUrlRight').value;
+        const ctaRightLink = document.getElementById('ctaRightLink');
+        ctaRightLink.textContent = ctaTextRight;
+        ctaRightLink.href = ctaUrlRight;
+    }
+
+    // Add event listener to form inputs to update the preview dynamically
+    document.querySelectorAll('#landingPageForm input').forEach(input => {
+        input.addEventListener('input', updatePreview);
+    });
+
+    // Adding more navbar links
+    document.getElementById('addNavbarLink').addEventListener('click', function() {
+        const navbarLinkItem = document.createElement('div');
+        navbarLinkItem.className = 'navbar-link-item';
+        navbarLinkItem.innerHTML = `
+            <div class="mb-3">
+                <label class="form-label">Nav Link Text</label>
+                <input type="text" class="form-control navbar-link-text" name="navbarLinkText[]" placeholder="About">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nav Link URL</label>
+                <input type="url" class="form-control navbar-link-url" name="navbarLinkUrl[]" placeholder="https://example.com/about">
+            </div>
+        `;
+        document.getElementById('navbarLinks').appendChild(navbarLinkItem);
+    });
+
+    // Night mode toggle
+    document.getElementById('toggleNightMode').addEventListener('click', function() {
+        const body = document.body;
+        const isNightMode = body.classList.toggle('bg-dark');
+        body.classList.toggle('text-light');
+        this.textContent = isNightMode ? 'Day Mode' : 'Night Mode';
+    });
+
+    // Initial preview update
+    updatePreview();
+});
+</script>
+</body>
+</html>
