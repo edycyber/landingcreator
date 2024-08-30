@@ -264,15 +264,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update the favicon when the user provides a new URL
     faviconUrlInput.addEventListener('input', function() {
         pageFavicon.href = faviconUrlInput.value;
+        updatePreview();
     });
 
     // Function to update the preview with the current form data
     function updatePreview() {
+        const previewDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+        previewDoc.open();
+        previewDoc.write(generateHtml());
+        previewDoc.close();
+    }
+
+    // Generate the HTML for the preview based on form input
+    function generateHtml() {
         // Customizing Favicon
         const faviconUrl = faviconUrlInput.value;
-        if (faviconUrl) {
-            previewFrame.contentWindow.document.querySelector('link[rel="icon"]').href = faviconUrl;
-        }
 
         // Customizing Navigation Bar
         const navbarTitle = document.getElementById('navbarTitle').value;
@@ -287,14 +293,56 @@ document.addEventListener('DOMContentLoaded', function() {
             navbarHtml += `<li class="nav-item"><a class="nav-link" href="${linkUrl}">${linkText}</a></li>`;
         });
         navbarHtml += `</ul></div></nav>`;
-        previewFrame.contentWindow.document.body.insertAdjacentHTML('afterbegin', navbarHtml);
 
         // Custom CTA on the right side
         const ctaTextRight = document.getElementById('ctaTextRight').value;
         const ctaUrlRight = document.getElementById('ctaUrlRight').value;
-        const ctaRightLink = document.getElementById('ctaRightLink');
-        ctaRightLink.textContent = ctaTextRight;
-        ctaRightLink.href = ctaUrlRight;
+
+        const pageTitle = document.getElementById('title').value;
+        const pageHeading = document.getElementById('heading').value;
+        const pageSubheading = document.getElementById('subheading').value;
+        const pageCtaText = document.getElementById('cta').value;
+        const pageCtaUrl = document.getElementById('ctaUrl').value;
+
+        return `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>${pageTitle}</title>
+                <link rel="icon" href="${faviconUrl}" type="image/x-icon">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/twbs/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.4/css/all.min.css">
+                <style>
+                    body {
+                        background-color: ${document.getElementById('backgroundColor').value};
+                        color: ${document.getElementById('textColor').value};
+                        background-image: url('${document.getElementById('backgroundImage').value}');
+                        background-size: cover;
+                        background-position: center;
+                    }
+                    .cta-right {
+                        position: fixed;
+                        right: 20px;
+                        bottom: 20px;
+                        z-index: 1000;
+                    }
+                </style>
+            </head>
+            <body>
+                ${navbarHtml}
+                <div class="container">
+                    <h1>${pageHeading}</h1>
+                    <p>${pageSubheading}</p>
+                    <a href="${pageCtaUrl}" class="btn btn-primary">${pageCtaText}</a>
+                </div>
+                <div id="ctaRight" class="cta-right">
+                    <a href="${ctaUrlRight}" class="btn btn-primary">${ctaTextRight}</a>
+                </div>
+            </body>
+            </html>
+        `;
     }
 
     // Add event listener to form inputs to update the preview dynamically
