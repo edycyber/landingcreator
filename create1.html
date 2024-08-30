@@ -24,12 +24,6 @@
         .navbar {
             margin-bottom: 20px;
         }
-        .cta-right {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            z-index: 1000;
-        }
     </style>
 </head>
 <body>
@@ -64,16 +58,6 @@
                     </div>
                 </div>
                 <button type="button" id="addNavbarLink" class="btn btn-secondary mb-3">Add Navbar Link</button>
-
-                <!-- Custom CTA on the right side -->
-                <div class="mb-3">
-                    <label for="ctaTextRight" class="form-label">CTA Text (Right Side)</label>
-                    <input type="text" class="form-control" id="ctaTextRight" name="ctaTextRight" placeholder="Contact Us">
-                </div>
-                <div class="mb-3">
-                    <label for="ctaUrlRight" class="form-label">CTA URL (Right Side)</label>
-                    <input type="url" class="form-control" id="ctaUrlRight" name="ctaUrlRight" placeholder="https://example.com/contact">
-                </div>
 
                 <!-- Form Fields -->
                 <div class="mb-3">
@@ -204,11 +188,6 @@
             <a href="videos.html" class="btn btn-info me-2">Explanatory Videos</a>
         </div>
     </div>
-
-    <!-- CTA button on the right side -->
-    <div id="ctaRight" class="cta-right">
-        <a href="#" class="btn btn-primary" id="ctaRightLink">Contact Us</a>
-    </div>
 </div>
 
 <script>
@@ -220,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update the favicon when the user provides a new URL
     faviconUrlInput.addEventListener('input', function() {
         pageFavicon.href = faviconUrlInput.value;
+        updatePreview();
     });
 
     // Function to update the preview with the current form data
@@ -245,9 +225,6 @@ document.addEventListener('DOMContentLoaded', function() {
             navbarHtml += `<li class="nav-item"><a class="nav-link" href="${linkUrl}">${linkText}</a></li>`;
         });
         navbarHtml += `</ul></div></nav>`;
-
-        const ctaTextRight = document.getElementById('ctaTextRight').value;
-        const ctaUrlRight = document.getElementById('ctaUrlRight').value;
 
         const pageTitle = document.getElementById('title').value;
         const pageHeading = document.getElementById('heading').value;
@@ -301,12 +278,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     .price-option {
                         margin: 20px 0;
                     }
-                    .cta-right {
-                        position: fixed;
-                        right: 20px;
-                        bottom: 20px;
-                        z-index: 1000;
-                    }
                 </style>
             </head>
             <body>
@@ -317,9 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="${pageCtaUrl}" class="btn btn-primary">${pageCtaText}</a>
                     <div class="features">${featuresHtml}</div>
                     <div class="pricing">${pricingHtml}</div>
-                </div>
-                <div id="ctaRight" class="cta-right">
-                    <a href="${ctaUrlRight}" class="btn btn-primary">${ctaTextRight}</a>
                 </div>
             </body>
             </html>
