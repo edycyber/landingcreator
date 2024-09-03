@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Entry</title>
+    <style>
+        body {
+            background-image: url('thanks1.png');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Please Enter Your Code</h2>
+        <input type="text" id="codeInput" placeholder="Enter code here">
+        <br>
+        <button onclick="checkCode()">Submit</button>
+    </div>
+
+    <script>
+        function checkCode() {
+            const codes = ['AI1532', 'AI1234', 'AI9876'];
+            const userInput = document.getElementById('codeInput').value;
+            if (codes.includes(userInput)) {
+                window.location.href = 'https://edycyber.github.io/landingcreator/create.html';
+            } else {
+                window.location.href = 'https://foodiverse0.gumroad.com/l/ppu';
+            }
+        }
+    </script>
+
+</body>
+</html>
