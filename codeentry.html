@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Entry</title>
+    <title>Code and Email Entry</title>
     <style>
         body {
             background-image: url('thanks1.png');
@@ -17,17 +17,28 @@
             color: white;
         }
         .container {
-            text-align: center;
+            display: flex;
+            align-items: center;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border-radius: 10px;
+            width: fit-content;
         }
-        input[type="text"] {
+        .container img {
+            max-width: 150px; /* Adjust the size as needed */
+            margin-right: 20px; /* Space between image and form */
+            border-radius: 10px;
+        }
+        .form-container {
+            text-align: center;
+        }
+        input[type="text"], input[type="email"] {
             padding: 10px;
             font-size: 18px;
             border-radius: 5px;
             border: none;
             margin-bottom: 20px;
+            width: 80%;
         }
         button {
             padding: 10px 20px;
@@ -46,23 +57,18 @@
 <body>
 
     <div class="container">
-        <h2>Please Enter Your Code</h2>
-        <input type="text" id="codeInput" placeholder="Enter code here">
-        <br>
-        <button onclick="checkCode()">Submit</button>
+        <img src="youlogo.jpg" alt="Your Logo">
+        <div class="form-container">
+            <h2>Enter Your Email and Code</h2>
+            <input type="email" id="emailInput" placeholder="Enter your email" required>
+            <br>
+            <input type="text" id="codeInput" placeholder="Enter code here" required>
+            <br>
+            <button onclick="validate()">Submit</button>
+        </div>
     </div>
 
-    <script>
-        function checkCode() {
-            const codes = ['AI1532', 'AI1234', 'AI9876'];
-            const userInput = document.getElementById('codeInput').value;
-            if (codes.includes(userInput)) {
-                window.location.href = 'https://edycyber.github.io/landingcreator/create.html';
-            } else {
-                window.location.href = 'https://foodiverse0.gumroad.com/l/ppu';
-            }
-        }
-    </script>
+    <script src="validate.js"></script>
 
 </body>
 </html>
