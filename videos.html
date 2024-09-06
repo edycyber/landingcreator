@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Content Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: right;
+        }
+        .sign-out-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .sign-out-button:hover {
+            background-color: #d32f2f;
+        }
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .video-container {
+            width: 100%;
+            max-width: 560px;
+            margin-top: 20px;
+        }
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="sign-out-button" onclick="signOut()">Sign Out</button>
+    </header>
+    <main>
+        <h1>Welcome to Our Centered Content Page</h1>
+        <p>
+            This is a sample paragraph that demonstrates the centered layout of our webpage. 
+            It contains some placeholder text to give you an idea of how the content is displayed. 
+            Feel free to replace this with your own content as needed.
+        </p>
+        <div class="video-container">
+            <iframe src="/api/placeholder/560/315" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </main>
+
+    <script>
+        function signOut() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
