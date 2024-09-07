@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinnectric Ad</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #14141f;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                align-items: flex-start; /* Align items to the top on larger screens */
+                text-align: left;
+                padding: 4rem;
+            }
+
+            .content {
+                margin-right: 4rem;
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem; /* Add spacing between logo and title */
+        }
+
+        .logo img {
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        button {
+            background-image: linear-gradient(to right, #8a2be2, #ff69b4);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .phone-image {
+            border-radius: 20px;
+            box-shadow: 0px 10px 50px rgba(0, 0, 255, 0.5); /* Adjusted box shadow for a more prominent glow */
+            width: 100%;
+            max-width: 350px;
+        }
+
+        @media (min-width: 768px) {
+            .phone-image {
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="content">
+        <div class="logo">
+            <img src="https://i.imgur.com/B3S4B8V.png" alt="Kinnectric Logo" width="50">
+            <h2 style="font-size: 1.5rem; color: white;">Kinnectric</h2>
+        </div>
+        <h1 style="color: white;">Restez toujours connecté</h1>
+        <button>Pour en savoir plus</button>
+    </div>
+    <div>
+        <img class="phone-image" src="https://i.imgur.com/Z6aEmx5.png" alt="Phone">
+    </div>
+</div>
+</body>
+</html>
