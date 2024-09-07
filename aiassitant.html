@@ -3,14 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI GUARDIAN APP</title>
+    <title>Image to Code</title>
     <link rel="icon" type="image/x-icon" href="logo.ico">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('23.png');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .message-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for readability */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-container p {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <script>
+        // Automatically open the external site in a new tab
         window.open("https://landingcreator-v001.streamlit.app", "_blank");
     </script>
-    <p>The page should open in a new tab. If not, <a href="https://landingcreator-v001.streamlit.app" target="_blank">click here</a>.</p>
+
+    <div class="message-container">
+        <p>The page should open in a new tab.</p>
+        <a href="https://landingcreator-v001.streamlit.app" target="_blank" class="btn">Go to AI Guardian App</a>
+    </div>
 </body>
 </html>
 
