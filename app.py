@@ -1,13 +1,12 @@
 import streamlit as st
 import pathlib
 from PIL import Image
+import os
+from dotenv import load_dotenv
+load_dotenv() 
 import google.generativeai as genai
 
 # Configure the API key directly in the script
-import os
-from dotenv import load_dotenv
-load_dotenv()  # Loads environment variables from a .env file
-
 API_KEY = os.getenv("YOUR_API_KEY")
 genai.configure(api_key=API_KEY) 
 
