@@ -4,8 +4,12 @@ from PIL import Image
 import google.generativeai as genai
 
 # Configure the API key directly in the script
-API_KEY = 'API_KEY'
-genai.configure(api_key=API_KEY)
+import os
+from dotenv import load_dotenv
+load_dotenv()  # Loads environment variables from a .env file
+
+API_KEY = os.getenv("YOUR_API_KEY")
+genai.configure(api_key=API_KEY) 
 
 # Generation configuration
 generation_config = {
