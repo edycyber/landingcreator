@@ -52,16 +52,7 @@ def send_message_to_model(message, image_path):
 # Streamlit app
 def main():
     st.title("Welcome to UI to Code 👨‍💻 ")
-    st.subheader('Only paste your image and wait second for the magic')
-
-     # Add a sign out button
-    if st.button("Sign Out"):
-        st.experimental_rerun()  # Rerun the app, effectively redirecting to index.html
-        # Alternatively, you can use:
-        # st.write(f'<a href="index.html">Sign Out</a>', unsafe_allow_html=True)
-
-if __name__ == "__main__":
-    main()
+    st.subheader('Only paste your image and wait second for the magic [Sign out](https://edycyber.github.io/landingcreator/)')
 
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
