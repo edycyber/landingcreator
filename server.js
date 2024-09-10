@@ -6,6 +6,15 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config(); // Load environment variables
 
+// Add your Gemini API dependency
+const GeminiAPI = require('gemini-api'); // Replace with the actual package name
+// You might need to install it: `npm install gemini-api`
+
+// Add your GitHub API dependency
+const { Octokit } = require('@octokit/rest'); // Replace with the actual package name
+// You might need to install it: `npm install @octokit/rest`
+
+
 app.use(cors());
 app.use(express.json());
 
