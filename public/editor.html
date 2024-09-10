@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor for Non-Coders</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="file-tree" class="column">
+            <h3>Project Files</h3>
+            <div id="file-list"></div>
+            <div style="flex-grow: 1;"></div>
+            <button id="deploy-btn">Deploy to GitHub</button>
+            <button id="dark-mode-btn">Toggle Dark Mode</button>
+            <button id="sign-out-btn">Sign Out</button>
+        </div>
+        <div id="code-preview" class="column">
+            <div class="tabs">
+                <span class="tab active" data-tab="code">Code</span>
+                <span class="tab" data-tab="preview">Preview</span>
+            </div>
+            <div id="code-editor"></div>
+            <iframe id="preview" style="display: none;"></iframe>
+        </div>
+        <div id="ai-chat" class="column">
+            <h3>AI Chat</h3>
+            <div id="chat-messages"></div>
+            <input type="text" id="chat-input" placeholder="Ask AI for help...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <div id="deploy-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Deploy to GitHub</h2>
+            <input type="text" id="github-token" placeholder="Enter your GitHub token">
+            <button id="confirm-deploy">Confirm Deploy</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script src="/main.js"></script>
+</body>
+</html>

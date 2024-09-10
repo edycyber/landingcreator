@@ -1,0 +1,211 @@
+/* Global Styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Column Layout */
+.column {
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow: auto;
+}
+
+/* File Tree Styling */
+#file-tree {
+    width: 20%;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.file-item {
+    cursor: pointer;
+    padding: 5px;
+    margin: 2px 0;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+.file-item:hover {
+    background-color: #e0e0e0;
+}
+
+/* Code Editor and Preview */
+#code-preview {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#code-editor, #preview {
+    width: 100%;
+    height: 45%;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+#preview {
+    background-color: #fff;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.tab {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+.tab.active {
+    background-color: #fff;
+}
+
+/* AI Chat Styling */
+#ai-chat {
+    width: 30%;
+    background-color: #f9f9f9;
+}
+
+#chat-messages {
+    height: 80%;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+#chat-input {
+    width: calc(100% - 70px);
+    padding: 5px;
+}
+
+#send-btn {
+    width: 60px;
+    padding: 5px;
+}
+
+/* Buttons for Deploy, Dark Mode, and Sign Out */
+#deploy-btn, #dark-mode-btn, #sign-out-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#deploy-btn {
+    background-color: #4CAF50;
+}
+
+#deploy-btn:hover {
+    background-color: #45a049;
+}
+
+#dark-mode-btn {
+    background-color: #333;
+}
+
+#dark-mode-btn:hover {
+    background-color: #555;
+}
+
+#sign-out-btn {
+    background-color: #f44336;
+}
+
+#sign-out-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Modal Styling for GitHub Deploy */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+/* Dark Mode Styling */
+.dark-mode {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.dark-mode #file-tree {
+    background-color: #2d2d2d;
+}
+
+.dark-mode #ai-chat {
+    background-color: #2d2d2d;
+}
+
+.dark-mode .file-item {
+    background-color: #3c3c3c;
+    color: #ffffff;
+}
+
+.dark-mode .file-item:hover {
+    background-color: #4c4c4c;
+}
+
+.dark-mode .tab {
+    background-color: #3c3c3c;
+    color: #ffffff;
+}
+
+.dark-mode .tab.active {
+    background-color: #1e1e1e;
+}
+
+.dark-mode #chat-messages, .dark-mode #chat-input {
+    background-color: #3c3c3c;
+    color: #ffffff;
+    border-color: #555;
+}
+
+.dark-mode .modal-content {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
