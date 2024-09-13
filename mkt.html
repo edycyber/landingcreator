@@ -1,0 +1,403 @@
+<html><head><base href="https://websim-engine.com/marketing-toolkit/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Marketing Toolkit</title>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f4f8;
+  }
+  h1, h2 {
+    color: #2c3e50;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .column {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input[type="text"], textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #2980b9;
+  }
+  .result {
+    margin-top: 20px;
+    background-color: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  .funnel-stage {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-left: 4px solid #3498db;
+    border-radius: 0 4px 4px 0;
+  }
+  .seo-tip, .copy-tip {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-left: 4px solid #27ae60;
+    border-radius: 0 4px 4px 0;
+  }
+</style>
+</head>
+<body>
+  <h1>Ultimate Marketing Toolkit</h1>
+  
+  <div class="container">
+    <!-- Column 1: Zero to Hero -->
+    <div class="column">
+      <h2>Zero to Hero: Marketing Plan Generator</h2>
+      <form id="zeroToHeroForm">
+        <div class="form-group">
+          <label for="productName">Product Name:</label>
+          <input type="text" id="productName" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="productDescription">Product Description:</label>
+          <textarea id="productDescription" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="targetAudience">Target Audience:</label>
+          <input type="text" id="targetAudience" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="budget">Marketing Budget:</label>
+          <select id="budget" required>
+            <option value="low">Low (Under $1,000)</option>
+            <option value="medium">Medium ($1,000 - $10,000)</option>
+            <option value="high">High (Over $10,000)</option>
+          </select>
+        </div>
+        
+        <button type="submit">Generate Marketing Plan</button>
+      </form>
+      
+      <div id="marketingPlan" class="result"></div>
+    </div>
+    
+    <!-- Column 2: Marketing Funnel Optimizer -->
+    <div class="column">
+      <h2>Marketing Funnel Optimizer</h2>
+      <form id="funnelForm">
+        <div class="form-group">
+          <label for="funnelStage">Select Funnel Stage to Optimize:</label>
+          <select id="funnelStage" required>
+            <option value="awareness">Awareness</option>
+            <option value="interest">Interest</option>
+            <option value="consideration">Consideration</option>
+            <option value="intent">Intent</option>
+            <option value="evaluation">Evaluation</option>
+            <option value="purchase">Purchase</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="currentConversionRate">Current Conversion Rate (%):</label>
+          <input type="number" id="currentConversionRate" min="0" max="100" step="0.1" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="mainChallenge">Main Challenge:</label>
+          <textarea id="mainChallenge" rows="4" required></textarea>
+        </div>
+        
+        <button type="submit">Optimize Funnel</button>
+      </form>
+      
+      <div id="funnelOptimization" class="result"></div>
+    </div>
+    
+    <!-- Column 3: SEO and Copy Enhancer -->
+    <div class="column">
+      <h2>SEO and Copy Enhancer</h2>
+      <form id="seoForm">
+        <div class="form-group">
+          <label for="targetKeyword">Target Keyword:</label>
+          <input type="text" id="targetKeyword" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="contentType">Content Type:</label>
+          <select id="contentType" required>
+            <option value="blogPost">Blog Post</option>
+            <option value="landingPage">Landing Page</option>
+            <option value="productDescription">Product Description</option>
+            <option value="socialMedia">Social Media Post</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="currentContent">Current Content:</label>
+          <textarea id="currentContent" rows="6" required></textarea>
+        </div>
+        
+        <button type="submit">Enhance SEO and Copy</button>
+      </form>
+      
+      <div id="seoEnhancement" class="result"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+  <script>
+    // Zero to Hero Script
+    const zeroToHeroForm = document.getElementById('zeroToHeroForm');
+    const marketingPlan = document.getElementById('marketingPlan');
+
+    const strategies = {
+      low: ["Content Marketing", "Social Media Marketing", "Email Marketing", "Influencer Partnerships", "Guerrilla Marketing", "Referral Programs"],
+      medium: ["Search Engine Marketing (SEM)", "Display Advertising", "Podcast Advertising", "Affiliate Marketing", "PR Campaigns", "Community Building"],
+      high: ["Television Advertising", "Out-of-Home Advertising", "Sponsorships", "Event Marketing", "Celebrity Endorsements", "Brand Partnerships"]
+    };
+
+    const recommendations = [
+      "Focus on creating high-quality, shareable content that resonates with your target audience.",
+      "Leverage user-generated content to build trust and authenticity.",
+      "Implement a robust SEO strategy to improve organic visibility.",
+      "Develop a strong brand identity and consistent messaging across all channels.",
+      "Utilize A/B testing to optimize your marketing efforts and improve conversion rates.",
+      "Engage with your audience regularly through social media and community forums.",
+      "Offer exclusive deals or early access to build a loyal customer base.",
+      "Collaborate with complementary brands to expand your reach.",
+      "Invest in customer service to turn users into brand advocates.",
+      "Use data analytics to continually refine your marketing strategy."
+    ];
+
+    const growthTips = [
+      "Implement a 'freemium' model to attract users and upsell premium features.",
+      "Create a viral loop by incentivizing users to invite friends.",
+      "Optimize your onboarding process to reduce user drop-off.",
+      "Use retargeting ads to re-engage potential customers who showed interest.",
+      "Leverage micro-influencers in your niche for authentic promotion.",
+      "Develop strategic partnerships to tap into established user bases.",
+      "Host webinars or virtual events to showcase your product's value.",
+      "Implement a customer feedback loop to continuously improve your product.",
+      "Create a content upgrade strategy to capture leads and nurture them.",
+      "Utilize growth hacking techniques to achieve rapid, cost-effective scaling."
+    ];
+
+    zeroToHeroForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const productName = document.getElementById('productName').value;
+      const productDescription = document.getElementById('productDescription').value;
+      const targetAudience = document.getElementById('targetAudience').value;
+      const budget = document.getElementById('budget').value;
+      
+      const selectedStrategies = _.sampleSize(strategies[budget], 3);
+      const selectedRecommendations = _.sampleSize(recommendations, 3);
+      const selectedGrowthTips = _.sampleSize(growthTips, 3);
+      
+      let planHTML = `
+        <h3>Marketing Plan for ${productName}</h3>
+        <p><strong>Product:</strong> ${productDescription}</p>
+        <p><strong>Target Audience:</strong> ${targetAudience}</p>
+        <p><strong>Budget:</strong> ${budget.charAt(0).toUpperCase() + budget.slice(1)}</p>
+        
+        <h4>Recommended Strategies:</h4>
+        <ul>
+          ${selectedStrategies.map(strategy => `<li>${strategy}</li>`).join('')}
+        </ul>
+        
+        <h4>Key Recommendations:</h4>
+        <ul>
+          ${selectedRecommendations.map(rec => `<li>${rec}</li>`).join('')}
+        </ul>
+        
+        <h4>Growth Tips:</h4>
+        <ul>
+          ${selectedGrowthTips.map(tip => `<li>${tip}</li>`).join('')}
+        </ul>
+      `;
+      
+      marketingPlan.innerHTML = planHTML;
+    });
+
+    // Marketing Funnel Optimizer Script
+    const funnelForm = document.getElementById('funnelForm');
+    const funnelOptimization = document.getElementById('funnelOptimization');
+
+    const funnelOptimizationTips = {
+      awareness: [
+        "Increase social media presence with eye-catching visuals and engaging content.",
+        "Implement a content marketing strategy focused on addressing common pain points.",
+        "Use targeted advertising to reach new potential customers in your niche.",
+        "Collaborate with influencers to expand your reach and credibility."
+      ],
+      interest: [
+        "Create valuable lead magnets to capture email addresses and nurture leads.",
+        "Develop a series of educational blog posts or videos to showcase your expertise.",
+        "Use retargeting ads to keep your brand top-of-mind for interested prospects.",
+        "Implement live chat on your website to answer questions and engage visitors."
+      ],
+      consideration: [
+        "Offer free trials or demos to let potential customers experience your product.",
+        "Create detailed case studies and testimonials to build trust and credibility.",
+        "Develop comparison guides that highlight your unique selling points.",
+        "Use email marketing to provide valuable information and address common objections."
+      ],
+      intent: [
+        "Implement abandoned cart recovery emails with special offers.",
+        "Create urgency with limited-time discounts or exclusive bonuses.",
+        "Offer personalized product recommendations based on user behavior.",
+        "Use exit-intent popups to capture leads before they leave your site."
+      ],
+      evaluation: [
+        "Provide detailed product specifications and comparisons.",
+        "Offer a money-back guarantee to reduce perceived risk.",
+        "Create FAQ pages to address common concerns and objections.",
+        "Implement a live demo or consultation option for high-ticket items."
+      ],
+      purchase: [
+        "Streamline the checkout process to reduce friction and cart abandonment.",
+        "Offer multiple payment options to cater to different preferences.",
+        "Use social proof and security badges to build trust during checkout.",
+        "Implement upsells and cross-sells to increase average order value."
+      ]
+    };
+
+    funnelForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const funnelStage = document.getElementById('funnelStage').value;
+      const currentConversionRate = document.getElementById('currentConversionRate').value;
+      const mainChallenge = document.getElementById('mainChallenge').value;
+      
+      const optimizationTips = _.sampleSize(funnelOptimizationTips[funnelStage], 3);
+      
+      let optimizationHTML = `
+        <h3>Funnel Optimization for ${funnelStage.charAt(0).toUpperCase() + funnelStage.slice(1)} Stage</h3>
+        <p><strong>Current Conversion Rate:</strong> ${currentConversionRate}%</p>
+        <p><strong>Main Challenge:</strong> ${mainChallenge}</p>
+        
+        <h4>Optimization Tips:</h4>
+        ${optimizationTips.map(tip => `
+          <div class="funnel-stage">
+            <p>${tip}</p>
+          </div>
+        `).join('')}
+        
+        <p><strong>Target Conversion Rate:</strong> ${(parseFloat(currentConversionRate) * 1.2).toFixed(1)}%</p>
+      `;
+      
+      funnelOptimization.innerHTML = optimizationHTML;
+    });
+
+    // SEO and Copy Enhancer Script
+    const seoForm = document.getElementById('seoForm');
+    const seoEnhancement = document.getElementById('seoEnhancement');
+
+    const seoTips = [
+      "Include the target keyword in the title, preferably near the beginning.",
+      "Use the target keyword in the first paragraph of your content.",
+      "Incorporate related keywords and synonyms throughout the content.",
+      "Optimize meta description with the target keyword and a clear call-to-action.",
+      "Use header tags (H1, H2, H3) to structure your content and include keywords.",
+      "Optimize image alt text with descriptive, keyword-rich phrases.",
+      "Ensure your content is comprehensive and covers the topic in-depth.",
+      "Include internal and external links to relevant, high-quality sources.",
+      "Improve page loading speed for better user experience and SEO.",
+      "Make sure your content is mobile-friendly and responsive."
+    ];
+
+    const copyTips = [
+      "Use power words and emotional triggers to captivate your audience.",
+      "Write in a conversational tone to connect with your readers.",
+      "Use short paragraphs and bullet points for easy readability.",
+      "Include social proof, such as testimonials or statistics, to build credibility.",
+      "Address the reader's pain points and offer clear solutions.",
+      "Use active voice and strong verbs to make your writing more engaging.",
+      "Create a compelling headline that grabs attention and includes the target keyword.",
+      "Include a clear and persuasive call-to-action (CTA).",
+      "Use storytelling techniques to make your content more memorable.",
+      "Highlight the unique value proposition of your product or service."
+    ];
+
+    seoForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const targetKeyword = document.getElementById('targetKeyword').value;
+      const contentType = document.getElementById('contentType').value;
+      const currentContent = document.getElementById('currentContent').value;
+      
+      const selectedSEOTips = _.sampleSize(seoTips, 3);
+      const selectedCopyTips = _.sampleSize(copyTips, 3);
+      
+      let enhancementHTML = `
+        <h3>SEO and Copy Enhancement for "${targetKeyword}"</h3>
+        <p><strong>Content Type:</strong> ${contentType}</p>
+        
+        <h4>SEO Recommendations:</h4>
+        ${selectedSEOTips.map(tip => `
+          <div class="seo-tip">
+            <p>${tip}</p>
+          </div>
+        `).join('')}
+        
+        <h4>Copy Improvement Tips:</h4>
+        ${selectedCopyTips.map(tip => `
+          <div class="copy-tip">
+            <p>${tip}</p>
+          </div>
+        `).join('')}
+        
+        <h4>Enhanced Content Preview:</h4>
+        <p>${enhanceContent(currentContent, targetKeyword)}</p>
+      `;
+      
+      seoEnhancement.innerHTML = enhancementHTML;
+    });
+
+    function enhanceContent(content, keyword) {
+      // This is a simple example. In a real-world scenario, you'd use more advanced NLP techniques.
+      const sentences = content.split('. ');
+      const enhancedSentences = sentences.map((sentence, index) => {
+        if (index === 0) {
+          return `${sentence} (Optimized with "${keyword}")`;
+        }
+        return sentence;
+      });
+      return enhancedSentences.join('. ');
+    }
+  </script>
+</body>
+</html>
