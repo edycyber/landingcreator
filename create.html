@@ -12,12 +12,15 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        #editor, #preview {
+        #editor, #preview, #bot {
             height: 90vh;
             overflow-y: auto;
         }
         #preview {
             border-left: 1px solid #ccc;
+        }
+        #bot {
+            border-right: 1px solid #ccc;
         }
         .feature-row, .testimonial-row, .pricing-row {
             margin-top: 20px;
@@ -50,8 +53,14 @@
 <div class="container-fluid">
     <h1 class="text-center my-4">Landing Page Creator</h1>
     <div class="row">
-        <!-- Editor on the left side -->
-        <div class="col-md-6" id="editor">
+        <!-- Bot on the left side -->
+        <div class="col-md-4" id="bot">
+            <h3>Bot</h3>
+            <iframe allow="microphone 'src'" src="https://www.botlibre.com/chat?&id=54497047&embedded=true&chatLog=true&facebookLogin=false&application=5902002138932409429&bubble=true&menubar=true&chooseLanguage=true&sendImage=true&background=%23fff&prompt=You+say&send=&css=https://www.botlibre.com/css/chatlog.css&language=en" width="100%" height="100%" frameborder="0" scrolling="auto"></iframe>
+        </div>
+
+        <!-- Editor in the middle -->
+        <div class="col-md-4" id="editor">
             <h3>Editor</h3>
             <form id="landingPageForm">
                 <!-- Form Fields -->
@@ -187,13 +196,14 @@
                 </div>
             </form>
         </div>
+
         <!-- Preview on the right side -->
-        <div class="col-md-6" id="preview">
+        <div class="col-md-4" id="preview">
             <h3>Preview</h3>
             <iframe id="previewFrame" style="width: 100%; height: 80vh; border: none;"></iframe>
         </div>
     </div>
-    <iframe allow="microphone 'src'" src="https://www.botlibre.com/chat?&id=54497047&embedded=true&chatLog=true&facebookLogin=false&application=5902002138932409429&bubble=true&menubar=true&chooseLanguage=true&sendImage=true&background=%23fff&prompt=You+say&send=&css=https://www.botlibre.com/css/chatlog.css&language=en" width="700" height="550" frameborder="0" scrolling="auto"></iframe>
+
     <div class="row mt-4">
         <div class="col-12 text-center">
             <button id="deployBtn" class="btn btn-primary me-2">Deploy to GitHub Pages</button>
@@ -201,11 +211,10 @@
             <!-- Button for explanatory videos -->
             <a href="videos.html" target="_blank" class="btn btn-info">Explanatory Videos</a>
             <a href="backgroundimage.html" target="_blank" class="btn btn-info">Background Images</a>
-         
         </div>
     </div>
 </div>
-
+    
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const template = `
@@ -216,6 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{title}}</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <style>
             body {
