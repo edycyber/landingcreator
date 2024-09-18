@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('choose2.png');
+            background-image: url('choosse2.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -22,19 +22,6 @@
         .content {
             text-align: center;
             color: white;
-        }
-
-        .phones {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-bottom: 20px;
-        }
-
-        .phones img {
-            width: 250px;
-            height: auto;
-            border-radius: 20px;
         }
 
         .button-container {
@@ -57,14 +44,68 @@
         .btn:hover {
             background-color: #0056b3;
         }
+
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        .popup h2 {
+            margin: 0 0 10px;
+        }
+
+        .popup input {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+
+        .shopping-btn {
+            background-color: #FF4500;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .shopping-btn i {
+            margin-right: 5px;
+        }
     </style>
+    <script src="valide2.js" defer></script>
 </head>
 <body>
     <div class="content">
         <div class="button-container">
             <a href="createbasic.html" class="btn">Lets GO</a>
-            <a href="create.html" class="btn">Lets GO</a>
+            <button class="btn" id="premium-btn">Lets GO (Premium)</button>
         </div>
+    </div>
+
+    <div class="popup" id="access-popup">
+        <h2>Enter Access Code</h2>
+        <input type="text" id="access-code" placeholder="Access Code" />
+        <button id="validate-btn">Submit</button>
+        <div id="error-message" style="color:red; display:none;">To access this functionality you must purchase the Premium Plan</div>
+        <button class="shopping-btn" id="purchase-btn"><i class="fa fa-shopping-cart"></i> Get Premium</button>
     </div>
 </body>
 </html>
