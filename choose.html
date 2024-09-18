@@ -39,55 +39,95 @@
             border-radius: 10px;
             cursor: pointer;
             text-decoration: none;
+            transition: background-color 0.3s ease;
         }
 
         .btn:hover {
             background-color: #0056b3;
         }
 
+        /* Popup Styles */
         .popup {
             display: none;
             position: fixed;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
         }
 
         .popup h2 {
-            margin: 0 0 10px;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         .popup input {
-            padding: 10px;
+            padding: 15px;
             width: 100%;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .popup input:focus {
+            border-color: #007BFF;
         }
 
         .popup button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             background-color: #007BFF;
             color: white;
             border: none;
+            border-radius: 10px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            outline: none;
         }
 
         .popup button:hover {
             background-color: #0056b3;
         }
 
+        #error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+
         .shopping-btn {
             background-color: #FF4500;
+            color: white;
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
             display: flex;
+            justify-content: center;
             align-items: center;
-            padding: 10px 20px;
         }
 
         .shopping-btn i {
             margin-right: 5px;
+        }
+
+        .shopping-btn:hover {
+            background-color: #d63700;
         }
     </style>
     <script src="validate2.js" defer></script>
@@ -104,9 +144,8 @@
         <h2>Enter Access Code</h2>
         <input type="text" id="access-code" placeholder="Access Code" />
         <button id="validate-btn">Submit</button>
-        <div id="error-message" style="color:red; display:none;">To access this functionality you must purchase the Premium Plan</div>
+        <div id="error-message">To access this functionality, you must purchase the Premium Plan</div>
         <button class="shopping-btn" id="purchase-btn"><i class="fa fa-shopping-cart"></i> Get Premium</button>
     </div>
 </body>
 </html>
-
