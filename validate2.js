@@ -35,6 +35,7 @@ document.getElementById("validate-btn").addEventListener("click", function() {
     } else {
         // Show error message and purchase button
         document.getElementById("error-message").style.display = "block";
+        document.getElementById("purchase-btn").style.display = "block";
     }
 });
 
