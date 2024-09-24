@@ -18,10 +18,12 @@
   }
 
   body {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--bg-color);
+    background-image: url('backg.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
   }
 
   .container {
@@ -293,6 +295,27 @@
   .feature-icon {
     opacity: 0;
   }
+  /* Container with 9:16 aspect ratio */
+.image-container {
+    width: 100%;
+    max-width: 540px; /* Adjust as needed */
+    aspect-ratio: 9/16;
+    margin: 20px auto;
+    border-radius: 20px; /* Rounded corners */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensuring the image fits properly */
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
 </style>
 </head>
 <body>
@@ -376,6 +399,13 @@
           </div>
         </div>
       </div>
+      <!-- New image container below it -->
+    <div class="image-container">
+        <img src="1.png" alt="Client testimonial image">
+        <img src="2.png" alt="Client testimonial image">
+        <img src="3.png" alt="Client testimonial image">
+    </div>
+</div>
     </section>
     
     <section id="pricing" class="pricing">
