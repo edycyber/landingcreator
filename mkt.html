@@ -13,6 +13,23 @@
     padding: 20px;
     background-color: #f0f4f8;
   }
+  header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 0;
+        }
+        .sign-out-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .sign-out-button:hover {
+            background-color: #d32f2f;
+        }
   h1, h2 {
     color: #2c3e50;
   }
@@ -79,6 +96,9 @@
 </style>
 </head>
 <body>
+    <header>
+        <button class="sign-out-button" onclick="signOut()">Sign Out</button>
+    </header>
   <h1>Marketing Toolkit</h1>
   <p>This tool provides you with basic marketing tips, if you need a more advanced tool please hire a specialized company.</p>
   
@@ -455,6 +475,9 @@
       });
       return enhancedSentences.join('. ');
     }
+    function signOut() {
+            window.location.href = 'index.html';
+        }
   </script>
 </body>
 </html>
