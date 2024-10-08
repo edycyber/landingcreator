@@ -12,6 +12,47 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
 
     <style>
+
+        header {
+    background-color: rgba(17, 17, 17, 0.9);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+        nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+  }
+
+  .nav-links li {
+    margin-left: 30px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--primary-color);
+  }
         #editor, #preview {
             height: 90vh;
             overflow-y: auto;
@@ -47,6 +88,18 @@
     </style>
 </head>
 <body>
+    <header>
+    <nav class="container">
+      <div class="logo">Sparrow AI</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#video">Demo</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="codeentry.html" class="cta-button">Sign in</a></li>
+      </ul>
+    </nav>
+  </header>
 <div class="container-fluid">
     <h1 class="text-center my-4">Landing Page Creator</h1>
     <div class="row">
