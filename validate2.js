@@ -13,7 +13,8 @@ function xorEncryptDecrypt(input, key) {
 const encryptedCodes = [
     xorEncryptDecrypt("AI1532", "secretKey"),
     xorEncryptDecrypt("AI1234", "secretKey"),
-    xorEncryptDecrypt("AI9874", "secretKey")
+    xorEncryptDecrypt("AI9874", "secretKey"),
+    xorEncryptDecrypt("PP-59874", "secretKey")
 ];
 
 // Show the popup when the Premium button is clicked
@@ -41,5 +42,5 @@ document.getElementById("validate-btn").addEventListener("click", function() {
 
 // Redirect to purchase page when the Get Premium button is clicked
 document.getElementById("purchase-btn").addEventListener("click", function() {
-    window.location.href = "https://www.aimovieclub.com";
+    window.location.href = "www.aimovieclub.com";
 });
