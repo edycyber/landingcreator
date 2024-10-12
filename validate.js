@@ -6,6 +6,6 @@ function validate() {
     if (validCodes.includes(code)) {
         window.location.href = 'choose.html';
     } else {
-        window.location.href = 'https://foodiverse0.gumroad.com/l/premiumplan';
+        window.location.href = 'https://sparrow-ai.online/premiumplan';
     }
 }
