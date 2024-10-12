@@ -42,5 +42,5 @@ document.getElementById("validate-btn").addEventListener("click", function() {
 
 // Redirect to purchase page when the Get Premium button is clicked
 document.getElementById("purchase-btn").addEventListener("click", function() {
-    window.location.href = "www.aimovieclub.com";
+    window.location.href = "https://sparrow-ai.online/premiumplan";
 });
