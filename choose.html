@@ -141,11 +141,34 @@
         .shopping-btn:hover {
             background-color: #d63700;
         }
+        .top-buttons {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+        .top-buttons button {
+            margin-left: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .top-buttons button:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
 
     </style>
     <script src="validate2.js" defer></script>
 </head>
 <body>
+    <div class="top-buttons">
+        <button onclick="profile()">Profile</button>
+        <button onclick="signOut()">Sign Out</button>
+    </div>
+    
     <div class="content">
         <div class="button-container">
             <a href="createbasic.html" class="btn">Lets GO</a>
@@ -160,5 +183,13 @@
         <div id="error-message">To access this functionality, you must purchase the Premium Plan</div>
         <button class="shopping-btn" id="purchase-btn"><i class="fa fa-shopping-cart"></i> Get Premium</button>
     </div>
+     <script>
+        function signOut() {
+            window.location.href = 'index.html';
+        }
+        function profile() {
+            window.location.href = 'choose.html';
+        }
+    </script>
 </body>
 </html>
