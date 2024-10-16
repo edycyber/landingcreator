@@ -11,62 +11,32 @@
             font-family: Arial, sans-serif;
             display: flex;
         }
-        .left-panel {
-            width: 40%;
-            background-color: #f8f9fa;
-            padding: 40px;
+        .left-side {
+            width: 50%;
+            padding: 20px;
             box-sizing: border-box;
-            overflow-y: auto;
         }
-        .right-panel {
-            width: 60%;
+        .right-side {
+            width: 50%;
             background-image: url('profilecool.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #666;
-            font-size: 1em;
-            margin-bottom: 30px;
-        }
         form {
             display: flex;
             flex-direction: column;
         }
-        input, textarea {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
+        input, textarea, button {
+            margin-bottom: 10px;
+            padding: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="left-panel">
+    <div class="left-side">
         <h1>Profile</h1>
-        <h2>Your data is protected. If you need help, please contact us.</h2>
+        <h2>Your data is protected, if you need help, please contact us.</h2>
         <h1>Contact Us</h1>
         <form action="https://formsubmit.co/el/confirm/143cd39d6194100306d2bb52c439aa3e" method="POST">
             <input type="text" name="name" required placeholder="Name">
@@ -78,7 +48,7 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-    <div class="right-panel"></div>
+    <div class="right-side"></div>
 </body>
 </html>
 
