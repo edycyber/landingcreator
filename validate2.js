@@ -14,7 +14,8 @@ const encryptedCodes = [
     xorEncryptDecrypt("AI1532", "secretKey"),
     xorEncryptDecrypt("AI1234", "secretKey"),
     xorEncryptDecrypt("AI9874", "secretKey"),
-    xorEncryptDecrypt("PP-59874", "secretKey")
+    xorEncryptDecrypt("PP-59874", "secretKey"),
+    xorEncryptDecrypt("ASP-khgtesml45j", "secretKey")
 ];
 
 // Show the popup when the Premium button is clicked
